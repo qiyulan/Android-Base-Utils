@@ -1,0 +1,55 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.sdk_version
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion rootProject.ext.sdk_version
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
+    compile "com.android.support:customtabs:$supportLibraryVersion"
+    //RxJava
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
+    //RxBinding
+    compile "com.jakewharton.rxbinding:rxbinding:$rx_binding_version"
+    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rx_binding_version"
+    compile "com.jakewharton.rxbinding:rxbinding-design:$rx_binding_version"
+    compile "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:$rx_binding_version"
+    //fragment
+    compile 'me.yokeyword:fragmentation:0.7.7@aar'
+    //Glide
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    //network
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile "com.squareup.retrofit2:adapter-rxjava:2.1.0"
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile "com.squareup.okhttp3:okhttp-urlconnection:3.4.1"
+    //stetho
+    debugCompile 'com.facebook.stetho:stetho:1.4.1'
+    debugCompile 'com.facebook.stetho:stetho-okhttp3:1.4.1'
+
+    testCompile 'junit:junit:4.12'
+}

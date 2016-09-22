@@ -1,0 +1,2 @@
+include ':baseutils'
+project(':baseutils').projectDir = new File('./baseutils')
