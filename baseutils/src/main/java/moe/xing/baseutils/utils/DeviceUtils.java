@@ -19,6 +19,7 @@ public class DeviceUtils {
 
     /**
      * 获取设备唯一安装 ID
+     * @return 设备的唯一安装 ID
      */
     public static String getUUID() {
         Context context = Init.getApplication();

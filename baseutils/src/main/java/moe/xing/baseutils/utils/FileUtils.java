@@ -19,16 +19,27 @@ import java.nio.channels.FileChannel;
 import java.util.Map;
 
 import moe.xing.baseutils.Init;
+import moe.xing.baseutils.R;
 import rx.Observable;
 import rx.Subscriber;
 
 /**
  * Created by Hehanbo on 2016/7/26 0026.
+ * <p>
+ * 文件相关帮助类
  */
 
 public class FileUtils {
 
-    public static File getCacheFile(String name) throws IOException {
+    /**
+     * 获取新的缓存文件(优先外部)
+     *
+     * @param name 文件名
+     * @return 文件
+     * @throws IOException 文件无法创建或者名称对应的不是文件
+     */
+    @NonNull
+    public static File getCacheFile(@NonNull String name) throws IOException {
         File cacheFile = new File(getCacheDir(), name);
         if (!cacheFile.getParentFile().exists()) {
             cacheFile.getParentFile().mkdirs();
@@ -36,22 +47,34 @@ public class FileUtils {
 
         cacheFile.createNewFile();
         if (!cacheFile.exists() || !cacheFile.isFile()) {
-            throw new IOException("建立文件出错");
+            throw new IOException(Init.getApplication().getString(R.string.error_in_make_file));
         }
         return cacheFile;
     }
 
-    public static File getCacheDir(String name) throws IOException {
+    /**
+     * 获取缓存文件夹下的子文件夹
+     *
+     * @param name 文件夹名
+     * @return 文件夹
+     * @throws IOException 文件夹无法创建
+     */
+    public static File getCacheDir(@NonNull String name) throws IOException {
         File cacheFile = new File(getCacheDir(), name);
         if (!cacheFile.exists()) {
             if (!cacheFile.mkdirs()) {
-                throw new IOException("error in make dir");
+                throw new IOException(Init.getApplication().getString(R.string.error_in_make_dir));
             }
         }
         return cacheFile;
     }
 
-
+    /**
+     * 外置储存区是否存在
+     *
+     * @return <code>true</code>存在
+     * <code>false</code>不存在
+     */
     public static boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -60,26 +83,54 @@ public class FileUtils {
         return false;
     }
 
+    /**
+     * 获取缓存文件夹(总文件夹)
+     *
+     * @return 缓存文件夹(优先外置)
+     */
+    @NonNull
     public static File getCacheDir() {
         if (isExternalStorageWritable()) {
+            //noinspection ConstantConditions
             return Init.getApplication().getExternalCacheDir();
         } else {
             return Init.getApplication().getCacheDir();
         }
     }
 
+    /**
+     * 复制文件
+     *
+     * @param src 源文夹
+     * @param dst 复制到的文件
+     * @throws IOException
+     */
     @WorkerThread
     public static void CopyFile(File src, File dst) throws IOException {
         FileInputStream inStream = new FileInputStream(src);
         CopyFile(inStream, dst);
     }
 
+    /**
+     * 复制文件
+     *
+     * @param src 源文夹
+     * @param dst 复制到的文件
+     * @throws IOException
+     */
     @WorkerThread
     public static void CopyFile(FileDescriptor src, File dst) throws IOException {
         FileInputStream inStream = new FileInputStream(src);
         CopyFile(inStream, dst);
     }
 
+    /**
+     * 复制文件
+     *
+     * @param inStream 源文夹流
+     * @param dst      复制到的文件
+     * @throws IOException
+     */
     @WorkerThread
     public static void CopyFile(FileInputStream inStream, File dst) throws IOException {
         FileOutputStream outStream = new FileOutputStream(dst);
@@ -90,6 +141,9 @@ public class FileUtils {
         outStream.close();
     }
 
+    /**
+     * 将文件拷贝至外置缓存区的 {@link rx.Observable.Operator}
+     */
     @WorkerThread
     public static Observable.Operator<File, File> copyFileToExCache() {
         return new Observable.Operator<File, File>() {
@@ -109,7 +163,8 @@ public class FileUtils {
                     @Override
                     public void onNext(File file) {
                         if (!FileUtils.isExternalStorageWritable()) {
-                            subscriber.onError(new Throwable("外置储存区不可用,无法分享图片"));
+                            subscriber.onError(new Throwable(Init.getApplication()
+                                    .getString(R.string.external_disk_not_exits)));
                         }
                         try {
                             File dst = getCacheFile(file.getName());
@@ -125,6 +180,11 @@ public class FileUtils {
         };
     }
 
+    /**
+     * 将 Asset 文件拷贝到缓存
+     *
+     * @param fileName 文件名
+     */
     @WorkerThread
     public static Observable<File> copyAsset(final String fileName) {
         return Observable.create(new Observable.OnSubscribe<File>() {

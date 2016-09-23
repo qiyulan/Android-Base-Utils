@@ -143,8 +143,10 @@ public class RetrofitNetwork {
             if (httpCacheDirectory != null) {
                 builder.cache(new Cache(httpCacheDirectory, 1024 * 1024 * 10));
             }
-            Debug.addStethoInOkhttp(builder);
-            Debug.addLoggerInOkhttp(builder);
+            if (Init.isDebug()) {
+                Debug.addStethoInOkhttp(builder);
+                Debug.addLoggerInOkhttp(builder);
+            }
 
             okHttpClient = builder.build();
         }
@@ -165,15 +167,16 @@ public class RetrofitNetwork {
     /**
      * 下载文件
      *
-     * @param fileUrl 文件地址
+     * @param fileUrl    文件地址
+     * @param forceExtra 是否必须储存在外置缓存区
      */
     @NonNull
-    public static Observable<File> download(final String fileUrl) {
+    public static Observable<File> download(final String fileUrl, final boolean forceExtra) {
         return Observable.create(new Observable.OnSubscribe<File>() {
             @Override
             public void call(Subscriber<? super File> subscriber) {
                 File file;
-                if (!FileUtils.isExternalStorageWritable()) {
+                if (!FileUtils.isExternalStorageWritable() && forceExtra) {
                     subscriber.onError(new Throwable("外置储存卡不可用"));
                     return;
                 }

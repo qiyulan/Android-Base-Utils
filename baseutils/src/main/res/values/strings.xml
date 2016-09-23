@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Base Utils</string>
+    <string name="error_in_make_file">建立文件出错</string>
+    <string name="error_in_make_dir">error in make dir</string>
+    <string name="external_disk_not_exits">外置储存区不可用</string>
 </resources>

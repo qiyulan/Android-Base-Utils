@@ -21,7 +21,7 @@ public class Debug {
     /**
      * 设置 Stetho ( application )
      */
-    static void addStethoInApp(Application application) {
+    public static void addStethoInApp(Application application) {
         Stetho.initializeWithDefaults(application);
     }
 

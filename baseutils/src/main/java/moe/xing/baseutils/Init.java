@@ -4,6 +4,8 @@ import android.app.Application;
 
 import java.lang.ref.SoftReference;
 
+import moe.xing.baseutils.utils.Debug;
+
 /**
  * Created by hehanbo on 16-9-21.
  * <p>
@@ -33,6 +35,9 @@ public class Init {
                         throw new RuntimeException("version name is INSTANT_RUN,pls change it.");
                     }
                     sInstance = new Init(application, isDebug, versionName, UA_NAME);
+                    if (isDebug) {
+                        Debug.addStethoInApp(application);
+                    }
                 }
             }
         }
