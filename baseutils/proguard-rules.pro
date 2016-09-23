@@ -17,6 +17,11 @@
 #}
 
 
+#=======================================
+# this app
+-keep class moe.xing.baseutils.network.** { *; }
+-dontwarn moe.xing.baseutils.network.**
+
 #==================Android support library======================
 -dontwarn android.support.**
 -keep class android.support.** { *; }
