@@ -25,8 +25,19 @@ public class IntentUtils {
      * {@value = false} 没有应用可以打开此 intent
      */
     public static boolean startIntent(Intent intent) {
+        return rawStartIntent(intent, Init.getApplication());
+    }
+
+    public static boolean startIntent(Intent intent, Activity activity) {
+        return rawStartIntent(intent, activity);
+    }
+
+    private static boolean rawStartIntent(Intent intent, Context context) {
         if (isSafe(intent)) {
-            Init.getApplication().startActivity(intent);
+            if (!(context instanceof Activity)) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
+            context.startActivity(intent);
             return true;
         }
         return false;
