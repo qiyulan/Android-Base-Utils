@@ -2,6 +2,7 @@ package moe.xing.baseutils.utils;
 
 import android.content.res.AssetManager;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
 import java.io.BufferedReader;
@@ -220,6 +221,17 @@ public class FileUtils {
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fos);
         outputStreamWriter.write(data);
         outputStreamWriter.close();
+    }
+
+    /**
+     * 从 Url 获取文件名
+     *
+     * @param url 文件的 Url
+     * @return 文件名
+     */
+    @NonNull
+    public static String getFileNameFromUrl(@NonNull String url) {
+        return url.substring(url.lastIndexOf("/") + 1);
     }
 
 }

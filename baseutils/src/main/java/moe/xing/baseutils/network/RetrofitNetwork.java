@@ -1,6 +1,7 @@
 package moe.xing.baseutils.network;
 
 import android.support.annotation.Keep;
+import android.support.annotation.NonNull;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -52,6 +53,13 @@ public class RetrofitNetwork {
                 .build();
     }
 
+    /**
+     * 网络结果转换器
+     * 调度线程并判断 API 结果是否成功
+     *
+     * @see #sOperator()
+     */
+    @NonNull
     public static <T extends BaseBean> Observable.Transformer<T, T> preHandle() {
         return new Observable.Transformer<T, T>() {
             @Override
@@ -63,6 +71,13 @@ public class RetrofitNetwork {
         };
     }
 
+    /**
+     * 网络结果转换器
+     * 判断 API 结果是否成功
+     * 失败的操作调用 {@link Subscriber#onError(Throwable)} 并传递失败原因
+     * 成功的操作调用 {@link Subscriber#onNext(Object)} 传递结果
+     */
+    @NonNull
     public static <T extends BaseBean> Observable.Operator<T, T> sOperator() {
         return new Observable.Operator<T, T>() {
             @Override
@@ -96,6 +111,9 @@ public class RetrofitNetwork {
         };
     }
 
+    /**
+     * 获取实例(并不线程安全,也不保证绝对单例,因为并不重要)
+     */
     public static RetrofitNetwork getInstance() {
         if (mInstance == null) {
             mInstance = new RetrofitNetwork();
@@ -136,6 +154,7 @@ public class RetrofitNetwork {
     /**
      * 获取 UA
      */
+    @NonNull
     public static String UA() {
         String BuildVersion = Init.getVersionName();
         String rootBuildVersion = BuildVersion.substring(0, BuildVersion.lastIndexOf("."));
@@ -143,17 +162,23 @@ public class RetrofitNetwork {
                 "(Android;Build 1;Version " + BuildVersion + ";)";
     }
 
-    public static Observable<File> download(final String fileUrl, final OkHttpClient client) {
+    /**
+     * 下载文件
+     *
+     * @param fileUrl 文件地址
+     */
+    @NonNull
+    public static Observable<File> download(final String fileUrl) {
         return Observable.create(new Observable.OnSubscribe<File>() {
             @Override
             public void call(Subscriber<? super File> subscriber) {
                 File file;
                 if (!FileUtils.isExternalStorageWritable()) {
-                    subscriber.onError(new Throwable("外置储存卡不可用,无法分享"));
+                    subscriber.onError(new Throwable("外置储存卡不可用"));
                     return;
                 }
                 try {
-                    file = FileUtils.getCacheFile(getFileName(fileUrl));
+                    file = FileUtils.getCacheFile(FileUtils.getFileNameFromUrl(fileUrl));
                 } catch (IOException e) {
                     e.printStackTrace();
                     subscriber.onError(e);
@@ -201,12 +226,8 @@ public class RetrofitNetwork {
         );
     }
 
-    private static String getFileName(String url) {
-        return url.substring(url.lastIndexOf("/") + 1);
-    }
-
     /**
-     * 插入UA
+     * 插入UA 的 Interceptor
      */
     private static class GZIPInterceptor implements Interceptor {
 
@@ -226,6 +247,9 @@ public class RetrofitNetwork {
         }
     }
 
+    /**
+     * 缓存的 Interceptor
+     */
     private static class CacheInterceptor implements Interceptor {
         @Override
         public Response intercept(Chain chain) throws IOException {

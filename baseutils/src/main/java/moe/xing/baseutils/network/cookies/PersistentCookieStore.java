@@ -2,6 +2,8 @@ package moe.xing.baseutils.network.cookies;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -31,7 +33,7 @@ class PersistentCookieStore {
     private final Map<String, ConcurrentHashMap<String, Cookie>> cookies;
     private final SharedPreferences cookiePrefs;
 
-    PersistentCookieStore(Context context) {
+    PersistentCookieStore(@NonNull Context context) {
         cookiePrefs = context.getSharedPreferences(COOKIE_PREFS, 0);
         cookies = new HashMap<>();
         //将持久化的cookies缓存到内存中 即map cookies
@@ -53,11 +55,17 @@ class PersistentCookieStore {
         }
     }
 
-    private String getCookieToken(Cookie cookie) {
+    private String getCookieToken(@NonNull Cookie cookie) {
         return cookie.name() + "@" + cookie.domain();
     }
 
-    public void add(HttpUrl url, Cookie cookie) {
+    /**
+     * 添加 cookie 记录
+     *
+     * @param url    被添加的 cookie 对应的 Url
+     * @param cookie 需要被添加的 cookie
+     */
+    public void add(@NonNull HttpUrl url, @NonNull Cookie cookie) {
         String name = getCookieToken(cookie);
 
 
@@ -77,13 +85,24 @@ class PersistentCookieStore {
         }
     }
 
-    public List<Cookie> get(HttpUrl url) {
+    /**
+     * 获取 cookies
+     *
+     * @return cookies 列表
+     */
+    @NonNull
+    public List<Cookie> get(@NonNull HttpUrl url) {
         ArrayList<Cookie> ret = new ArrayList<>();
         if (cookies.containsKey(url.host()))
             ret.addAll(cookies.get(url.host()).values());
         return ret;
     }
 
+    /**
+     * 移除所有记录
+     *
+     * @return <code>true</code> 成功清除
+     */
     boolean removeAll() {
         SharedPreferences.Editor prefsWriter = cookiePrefs.edit();
         prefsWriter.clear();
@@ -92,7 +111,15 @@ class PersistentCookieStore {
         return true;
     }
 
-    public boolean remove(HttpUrl url, Cookie cookie) {
+    /**
+     * 删除 cookie
+     *
+     * @param url    cookie 对应的 url
+     * @param cookie 需要被删除的 cookie
+     * @return <code>true</code>被删除
+     * <code>false</code> cookie 与 Url 不对应
+     */
+    public boolean remove(@NonNull HttpUrl url, @NonNull Cookie cookie) {
         String name = getCookieToken(cookie);
         if (cookies.containsKey(url.host()) && cookies.get(url.host()).containsKey(name)) {
             cookies.get(url.host()).remove(name);
@@ -108,6 +135,12 @@ class PersistentCookieStore {
         }
     }
 
+    /**
+     * 获取所有 cookies
+     *
+     * @return 返回所有储存中的 cookies 列表
+     */
+    @NonNull
     public List<Cookie> getCookies() {
         ArrayList<Cookie> ret = new ArrayList<>();
         for (String key : cookies.keySet())
@@ -120,8 +153,10 @@ class PersistentCookieStore {
      *
      * @param cookie 要序列化的cookie
      * @return 序列化之后的string
+     * <code>null</code> 如果 cookie 为 null 或者 解码时出现 IOE
      */
-    private String encodeCookie(SerializableOkHttpCookies cookie) {
+    @Nullable
+    private String encodeCookie(@Nullable SerializableOkHttpCookies cookie) {
         if (cookie == null)
             return null;
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -140,8 +175,10 @@ class PersistentCookieStore {
      *
      * @param cookieString cookies string
      * @return cookie object
+     * <code>null</code> 出现 IOE 或 ClassNotFoundException
      */
-    private Cookie decodeCookie(String cookieString) {
+    @Nullable
+    private Cookie decodeCookie(@NonNull String cookieString) {
         byte[] bytes = hexStringToByteArray(cookieString);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
         Cookie cookie = null;
@@ -162,7 +199,8 @@ class PersistentCookieStore {
      * @param bytes byte array to be converted
      * @return string containing hex values
      */
-    private String byteArrayToHexString(byte[] bytes) {
+    @NonNull
+    private String byteArrayToHexString(@NonNull byte[] bytes) {
         StringBuilder sb = new StringBuilder(bytes.length * 2);
         for (byte element : bytes) {
             int v = element & 0xff;
@@ -180,7 +218,8 @@ class PersistentCookieStore {
      * @param hexString string of hex-encoded values
      * @return decoded byte array
      */
-    private byte[] hexStringToByteArray(String hexString) {
+    @NonNull
+    private byte[] hexStringToByteArray(@NonNull String hexString) {
         int len = hexString.length();
         byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {
