@@ -2,6 +2,7 @@ package moe.xing.baseutils.view;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 
 import me.yokeyword.fragmentation.SupportFragment;
 import moe.xing.baseutils.utils.LogHelper;
+import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 
 /**
@@ -117,5 +120,41 @@ public abstract class BaseFragment extends SupportFragment {
         } else {
             return super.onBackPressedSupport();
         }
+    }
+
+    /**
+     * fragment 生命周期与 Rx 协调
+     * 判断 能否安全进行UI操作
+     * 失败的操作调用 {@link Subscriber#onError(Throwable)} 并传递失败原因
+     * 成功的操作调用 {@link Subscriber#onNext(Object)} 传递结果
+     */
+    @NonNull
+    public <T> Observable.Operator<T, T> fragmentLifeTime() {
+        return new Observable.Operator<T, T>() {
+            @Override
+            public Subscriber<? super T> call(final Subscriber<? super T> subscriber) {
+                return new Subscriber<T>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (isAdded()) {
+                            subscriber.onError(e);
+                            LogHelper.e(e);
+                        }
+                    }
+
+                    @Override
+                    public void onNext(T t) {
+                        if (isAdded()) {
+                            subscriber.onNext(t);
+                        }
+                    }
+                };
+            }
+        };
     }
 }
