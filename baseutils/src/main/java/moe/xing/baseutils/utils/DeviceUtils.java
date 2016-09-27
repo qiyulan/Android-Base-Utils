@@ -11,11 +11,11 @@ import moe.xing.baseutils.Init;
  * <p>
  * 设备相关
  */
-
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class DeviceUtils {
-    private static final String UUID = "uuid";
+    protected static final String UUID = "uuid";
 
-    private static final String FILE_NAME = "user_info";
+    protected static final String FILE_NAME = "user_info";
 
     /**
      * 获取设备唯一安装 ID

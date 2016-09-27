@@ -13,12 +13,15 @@ import moe.xing.baseutils.Init;
 
 /**
  * Created by Hehanbo on 2016/7/21 0021.
+ * <p>
+ * intent 帮助类
  */
-
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class IntentUtils {
 
     /**
      * 安全的调用外部 intent
+     * 使用 application context 打开
      *
      * @param intent 需要使用其他应用的 intent
      * @return {@value = true} 安全的打开了
@@ -28,6 +31,14 @@ public class IntentUtils {
         return rawStartIntent(intent, Init.getApplication());
     }
 
+    /**
+     * 安全的调用外部 intent
+     *
+     * @param intent   需要使用其他应用的 intent
+     * @param activity 被用于打开的 context
+     * @return {@value = true} 安全的打开了
+     * {@value = false} 没有应用可以打开此 intent
+     */
     public static boolean startIntent(Intent intent, Activity activity) {
         return rawStartIntent(intent, activity);
     }
@@ -57,18 +68,22 @@ public class IntentUtils {
 
 
     /**
-     * 获取接受 intent 的应用的图标
+     * 获取接受 intent 的应用的信息
+     *
+     * @param intent 需要获取信息的 intent
+     * @return {@link ResolveInfo}列表
      */
-    public static List<ResolveInfo> getIntentAppIcon(Intent intent, Context context) {
-        PackageManager pm = context.getPackageManager();
+    public static List<ResolveInfo> getIntentAppIcon(Intent intent) {
+        PackageManager pm = Init.getApplication().getPackageManager();
         return pm.queryIntentActivities(intent, 0);
     }
 
 
     /**
-     * 安全的调用外部 intent
+     * 安全的调用外部 intent 并获取返回的信息
      *
      * @param intent      需要使用其他应用的 intent
+     * @param activity    获取返回的 activity
      * @param requestCode 请求码
      * @return {@value = true} 安全的打开了
      * {@value = false} 没有应用可以打开此 intent
@@ -85,6 +100,7 @@ public class IntentUtils {
      * 安全的调用外部 intent
      *
      * @param intent      需要使用其他应用的 intent
+     * @param fragment    获取返回的 fragment
      * @param requestCode 请求码
      * @return {@value = true} 安全的打开了
      * {@value = false} 没有应用可以打开此 intent

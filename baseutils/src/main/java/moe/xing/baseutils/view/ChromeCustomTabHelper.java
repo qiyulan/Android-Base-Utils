@@ -20,7 +20,7 @@ import android.util.TypedValue;
  * <p>
  * CCT帮助类
  */
-
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class ChromeCustomTabHelper {
     private static CustomTabsServiceConnection connection = new CustomTabsServiceConnection() {
         @Override

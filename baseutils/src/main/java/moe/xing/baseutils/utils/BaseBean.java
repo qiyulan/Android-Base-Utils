@@ -9,7 +9,7 @@ import java.io.Serializable;
  * <p>
  * <a href="http://crm.yunyuer.com/apidoc/zsb/#api-groupDesc-DescDescReturn">基础bean</a>
  */
-
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class BaseBean implements Serializable {
 
     /**

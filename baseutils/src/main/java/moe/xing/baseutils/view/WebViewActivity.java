@@ -24,7 +24,7 @@ import okhttp3.HttpUrl;
  * <p>
  * webview
  */
-
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class WebViewActivity extends BaseActivity {
     public static final String URL_LOAD = "URL_LOAD";
 

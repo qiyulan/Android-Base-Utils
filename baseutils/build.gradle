@@ -41,7 +41,7 @@ dependencies {
     compile "com.jakewharton.rxbinding:rxbinding-design:$rx_binding_version"
     compile "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:$rx_binding_version"
     //fragment
-    compile 'me.yokeyword:fragmentation:0.7.7@aar'
+    compile 'me.yokeyword:fragmentation:0.7.10@aar'
     //Glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
     //network

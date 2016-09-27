@@ -27,6 +27,7 @@ import okhttp3.HttpUrl;
  * <p>
  * 序列化储存 Cookies
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 class PersistentCookieStore {
     private static final String LOG_TAG = "PersistentCookieStore";
     private static final String COOKIE_PREFS = "Cookies_Prefs";

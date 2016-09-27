@@ -37,6 +37,7 @@ import rx.schedulers.Schedulers;
  * 网络接口
  */
 @Keep
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class RetrofitNetwork {
 
     private static RetrofitNetwork mInstance;

@@ -20,7 +20,7 @@ import rx.Subscription;
 /**
  * Created by Hehanbo on 2016/7/14 0014.
  */
-
+@SuppressWarnings({"WeakerAccess", "unused"})
 public abstract class BaseFragment extends SupportFragment {
 
     protected View mView;

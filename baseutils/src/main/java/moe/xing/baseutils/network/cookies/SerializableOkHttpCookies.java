@@ -12,6 +12,7 @@ import okhttp3.Cookie;
  * <p>
  * Cookies bean
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 class SerializableOkHttpCookies implements Serializable {
     private transient final Cookie cookies;
     private transient Cookie clientCookies;

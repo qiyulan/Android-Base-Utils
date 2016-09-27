@@ -13,6 +13,7 @@ import okhttp3.HttpUrl;
 /**
  * 自动管理 Cookies
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class MyCookiesManager implements CookieJar {
     private static final PersistentCookieStore cookieStore = new PersistentCookieStore(Init.getApplication());
 

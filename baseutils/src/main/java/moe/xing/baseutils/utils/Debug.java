@@ -15,6 +15,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.Buffer;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class Debug {
 
 

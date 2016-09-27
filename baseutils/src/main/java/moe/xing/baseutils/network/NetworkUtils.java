@@ -11,7 +11,7 @@ import moe.xing.baseutils.Init;
  * <p>
  * 网络帮助类
  */
-
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class NetworkUtils {
 
     /**

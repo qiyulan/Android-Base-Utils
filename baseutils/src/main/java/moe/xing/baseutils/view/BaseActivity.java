@@ -19,7 +19,7 @@ import rx.Subscription;
  * <p>
  * activity 基类
  */
-
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class BaseActivity extends SupportActivity {
 
     protected Activity mActivity;

@@ -11,7 +11,7 @@ import moe.xing.baseutils.utils.Debug;
  * <p>
  * 储存 application 和 debug 开关
  */
-
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class Init {
 
     private volatile static Init sInstance;
