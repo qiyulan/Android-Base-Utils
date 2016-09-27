@@ -30,6 +30,7 @@ script:
   - ./gradlew assembleDebugUnitTest
   - ./gradlew assembleDebug
   - ./gradlew assembleRelease
+  - ./gradlew connectedAndroidTest coveralls
   
   
 jdk:
