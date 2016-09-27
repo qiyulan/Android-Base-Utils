@@ -1,6 +1,7 @@
 Android-Base-Utils
 
 [![Release](https://jitpack.io/v/qiyulan/Android-Base-Utils.svg?style=flat-square)](https://jitpack.io/#qiyulan/Android-Base-Utils)
+[![Build Status](https://travis-ci.org/qiyulan/Android-Base-Utils.svg?branch=master)](https://travis-ci.org/qiyulan/Android-Base-Utils)
 
 ---
 ### download
