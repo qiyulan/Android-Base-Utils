@@ -144,7 +144,7 @@ public class LogHelper {
      * 显示 toast
      * todo 小米设备跳过显示
      */
-    public static void Toast(String message) {
+    public static void Toast(CharSequence message) {
         try {
             Toast.makeText(Init.getApplication(), message, Toast.LENGTH_LONG).show();
         } catch (Exception ignore) {
@@ -168,15 +168,15 @@ public class LogHelper {
         snackbarText.setSpan(whiteSpan, 0, snackbarText.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         if (view instanceof ScrollView || view instanceof NestedScrollView) {
             try {
-                Toast(message);
+                Toast(snackbarText);
             } catch (Exception ignore) {
             }
         } else {
             try {
-                Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, snackbarText, Snackbar.LENGTH_LONG).show();
             } catch (Exception e) {
                 try {
-                    Toast.makeText(view.getContext(), message, Toast.LENGTH_LONG).show();
+                    Toast(snackbarText);
                 } catch (Exception ignore) {
                 }
             }
