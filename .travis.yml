@@ -29,8 +29,9 @@ before_script:
 script:
   - ./gradlew assembleDebug
   - ./gradlew assembleRelease
+  - ./gradlew jacocoTestReportDebug coveralls
 #  - ./gradlew testDebugUnitTest
-  - ./gradlew createDebugCoverageReport coveralls
+#  - ./gradlew createDebugCoverageReport coveralls
 #  - ./gradlew connectedAndroidTest coveralls
   
   
