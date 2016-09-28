@@ -2,7 +2,11 @@ package moe.xing.baseutils.utils;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
@@ -158,6 +162,10 @@ public class LogHelper {
 
     public static void Snackbar(View view, String message, boolean printLog) {
         message = getNonNullString(message);
+        final ForegroundColorSpan whiteSpan = new ForegroundColorSpan(ContextCompat.getColor(view.getContext(),
+                android.R.color.white));
+        SpannableStringBuilder snackbarText = new SpannableStringBuilder(message);
+        snackbarText.setSpan(whiteSpan, 0, snackbarText.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         if (view instanceof ScrollView || view instanceof NestedScrollView) {
             try {
                 Toast(message);
