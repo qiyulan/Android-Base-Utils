@@ -38,11 +38,7 @@ public class WebViewActivity extends BaseActivity {
         mWebView = (WebView) findViewById(R.id.web_view);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         Intent intent = getIntent();
         String uri = intent.getStringExtra(URL_LOAD);
         if (TextUtils.isEmpty(uri)) {
@@ -58,13 +54,11 @@ public class WebViewActivity extends BaseActivity {
 
         cookieManager.removeAllCookie();
 
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
+        for (Cookie cookie : cookies) {
 
-                cookieManager.setCookie(cookie.domain(), cookie.toString());
-                Log.d("CookieUrl", cookie.toString());
+            cookieManager.setCookie(cookie.domain(), cookie.toString());
+            Log.d("CookieUrl", cookie.toString());
 
-            }
         }
 
         mWebView.loadUrl(uri);
@@ -75,6 +69,5 @@ public class WebViewActivity extends BaseActivity {
                 getSupportActionBar().setTitle(view.getTitle());
             }
         });
-
     }
 }
