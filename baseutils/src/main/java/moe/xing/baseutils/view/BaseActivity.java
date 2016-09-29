@@ -5,7 +5,9 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.text.TextUtils;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import me.yokeyword.fragmentation.SupportActivity;
@@ -84,6 +86,24 @@ public class BaseActivity extends SupportActivity {
             mDialog.dismiss();
             mDialog = null;
         }
+    }
+
+    public void showMessage(String message) {
+        ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
+                .findViewById(android.R.id.content)).getChildAt(0);
+        LogHelper.Snackbar(viewGroup, message);
+    }
+
+    public void showMessage(Throwable e) {
+        showMessage(e.getLocalizedMessage());
+    }
+
+    public void showMessage(@StringRes int message) {
+        showMessage(getString(message));
+    }
+
+    public void showMessage(@StringRes int message, String message2) {
+        showMessage(getString(message) + message2);
     }
 
     /**
