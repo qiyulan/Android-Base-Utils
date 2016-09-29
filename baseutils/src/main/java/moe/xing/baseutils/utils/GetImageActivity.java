@@ -83,11 +83,15 @@ public class GetImageActivity extends Activity {
                     if (corpedImage != null) {
                         File corped = new File(URI.create(corpedImage.toString()));
                         RxGetImage.getInstance().onAns(corped);
+                        finish();
                     }
                     break;
                 default:
                     super.onActivityResult(requestCode, resultCode, data);
             }
+        } else {
+            RxGetImage.getInstance().onAns(null);
+            finish();
         }
     }
 

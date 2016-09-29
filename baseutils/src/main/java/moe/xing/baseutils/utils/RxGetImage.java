@@ -2,6 +2,7 @@ package moe.xing.baseutils.utils;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -62,12 +63,24 @@ public class RxGetImage {
     /**
      * 设置返回的图片
      *
-     * @param file 返回的图片
+     * @param file 返回的图片 可能为空(用户放弃)
      */
-    void onAns(File file) {
+    void onAns(@Nullable File file) {
         for (Subscriber<? super File> subscriber : mSubscribers) {
             subscriber.onNext(file);
             subscriber.onCompleted();
+        }
+        mSubscribers.clear();
+    }
+
+    /**
+     * 设置返回错误
+     *
+     * @param message 错误信息
+     */
+    void onError(String message) {
+        for (Subscriber<? super File> subscriber : mSubscribers) {
+            subscriber.onError(new Throwable(message));
         }
         mSubscribers.clear();
     }
