@@ -67,7 +67,9 @@ public class RxGetImage {
      */
     void onAns(@Nullable File file) {
         for (Subscriber<? super File> subscriber : mSubscribers) {
-            subscriber.onNext(file);
+            if (file != null) {
+                subscriber.onNext(file);
+            }
             subscriber.onCompleted();
         }
         mSubscribers.clear();
