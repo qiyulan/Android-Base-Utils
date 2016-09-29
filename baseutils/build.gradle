@@ -63,6 +63,8 @@ dependencies {
     //stetho
     compile 'com.facebook.stetho:stetho:1.4.1'
     compile 'com.facebook.stetho:stetho-okhttp3:1.4.1'
+    //corp
+    compile 'com.soundcloud.android:android-crop:1.0.1@aar'
 
     testCompile 'junit:junit:4.12'
 }

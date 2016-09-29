@@ -8,6 +8,11 @@
         <activity
             android:name=".view.WebViewActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
+        <activity
+            android:name=".utils.GetImageActivity"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
     </application>
 
