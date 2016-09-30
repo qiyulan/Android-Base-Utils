@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import moe.xing.baseutils.BuildConfig;
 import moe.xing.baseutils.Init;
 
 
@@ -25,7 +24,7 @@ import moe.xing.baseutils.Init;
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class LogHelper {
 
-    private static final boolean LOG_ENABLE = BuildConfig.DEBUG;
+    private static final boolean LOG_ENABLE = Init.isDebug();
     private static final boolean DETAIL_ENABLE = true;
     private static final String TAG = "sc_edu";
 
