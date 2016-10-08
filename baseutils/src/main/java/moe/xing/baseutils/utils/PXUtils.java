@@ -14,4 +14,8 @@ public class PXUtils {
         return dp * Init.getApplication().getResources().getDimensionPixelSize(R.dimen.dp);
     }
 
+    public static int spToPx(int sp) {
+        return sp * Init.getApplication().getResources().getDimensionPixelSize(R.dimen.sp);
+    }
+
 }

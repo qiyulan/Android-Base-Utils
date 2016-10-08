@@ -47,6 +47,7 @@ dependencies {
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
     //RxBinding
     compile "com.jakewharton.rxbinding:rxbinding:$rx_binding_version"
+    compile "com.jakewharton.rxbinding:rxbinding-support-v4:$rx_binding_version"
     compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rx_binding_version"
     compile "com.jakewharton.rxbinding:rxbinding-design:$rx_binding_version"
     compile "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:$rx_binding_version"
