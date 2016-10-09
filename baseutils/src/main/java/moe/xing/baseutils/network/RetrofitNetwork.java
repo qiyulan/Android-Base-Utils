@@ -24,8 +24,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -44,15 +42,15 @@ public class RetrofitNetwork {
     private static OkHttpClient okHttpClient;
     public Retrofit retrofit;
 
-    private RetrofitNetwork() {
-        retrofit = new Retrofit.Builder()
-                //.callbackExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-                .client(okHttpClient())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl("http://crm.yunyuer.com/zsb/api/")
-                .build();
-    }
+//    private RetrofitNetwork() {
+//        retrofit = new Retrofit.Builder()
+//                //.callbackExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+//                .client(okHttpClient())
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+//                .baseUrl("http://***/")
+//                .build();
+//    }
 
     /**
      * 网络结果转换器
