@@ -38,7 +38,7 @@ import rx.schedulers.Schedulers;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class RetrofitNetwork {
 
-    private static RetrofitNetwork mInstance;
+    //    private static RetrofitNetwork mInstance;
     private static OkHttpClient okHttpClient;
     public Retrofit retrofit;
 
@@ -113,12 +113,12 @@ public class RetrofitNetwork {
     /**
      * 获取实例(并不线程安全,也不保证绝对单例,因为并不重要)
      */
-    public static RetrofitNetwork getInstance() {
-        if (mInstance == null) {
-            mInstance = new RetrofitNetwork();
-        }
-        return mInstance;
-    }
+//    public static RetrofitNetwork getInstance() {
+//        if (mInstance == null) {
+//            mInstance = new RetrofitNetwork();
+//        }
+//        return mInstance;
+//    }
 
     /**
      * 设置 okhttp client
