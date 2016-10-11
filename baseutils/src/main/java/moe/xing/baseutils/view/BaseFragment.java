@@ -23,7 +23,7 @@ import rx.Subscription;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public abstract class BaseFragment extends SupportFragment {
 
-    protected View mView;
+    protected View mRootView;
     protected Context mContext;
     protected Subscription mSubscription;
     protected android.support.v7.app.ActionBar mActionBar;
@@ -33,10 +33,10 @@ public abstract class BaseFragment extends SupportFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = CreateView(inflater, container, savedInstanceState);
-        assert mView != null;
-        ViewFound(mView);
-        return mView;
+        mRootView = CreateView(inflater, container, savedInstanceState);
+        assert mRootView != null;
+        ViewFound(mRootView);
+        return mRootView;
     }
 
 
@@ -85,7 +85,7 @@ public abstract class BaseFragment extends SupportFragment {
     }
 
     public void showMessage(String message) {
-        LogHelper.Snackbar(mView, message);
+        LogHelper.Snackbar(mRootView, message);
     }
 
     public void showMessage(Throwable e) {
