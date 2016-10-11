@@ -84,7 +84,7 @@ public class RetrofitNetwork {
                 return new Subscriber<T>() {
                     @Override
                     public void onCompleted() {
-
+                        subscriber.onCompleted();
                     }
 
                     @Override
