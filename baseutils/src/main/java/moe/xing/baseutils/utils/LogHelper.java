@@ -34,8 +34,8 @@ public class LogHelper {
         if (DETAIL_ENABLE) {
             int lineNumber = 4;
             StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[lineNumber];
-            while (stackTraceElement.getFileName().equals("LogHelper.java")
-                    || stackTraceElement.getFileName().equals("BaseFragment.java")) {
+            while ("LogHelper.java".equals(stackTraceElement.getFileName())
+                    || "BaseFragment.java".equals( stackTraceElement.getFileName()) {
                 lineNumber++;
                 stackTraceElement = Thread.currentThread().getStackTrace()[lineNumber];
             }
