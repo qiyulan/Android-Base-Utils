@@ -1,16 +1,14 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.github.kt3k.coveralls'
-apply plugin: 'jacoco'
+apply plugin: 'maven-publish'
 
-group='com.github.qiyulan'
+group = 'com.github.qiyulan'
 
 android {
     compileSdkVersion rootProject.ext.sdk_version
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion rootProject.ext.sdk_version
         versionCode 1
         versionName "1.0"
@@ -46,39 +44,20 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
 
-// build a jar with source files
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'com.github.qiyulan'
+                artifactId = 'Android-Base-Utils'
+                version = '2.0'
+            }
 
-task javadoc(type: Javadoc) {
-    failOnError  false
-    source = android.sourceSets.main.java.sourceFiles
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    classpath += configurations.compile
-}
-
-// build a jar with javadoc
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-[javadoc]*.options*.encoding = 'UTF-8'
-[javadoc]*.options*.charSet = 'UTF-8'
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
-
-coveralls {
-    jacocoReportPath = "${buildDir}/reports/jacoco/debug/jacoco.xml"
-}
-
-tasks.coveralls {
-    dependsOn 'assembleDebugUnitTest'
-    onlyIf { System.env.'CI' }
+        }
+    }
 }
